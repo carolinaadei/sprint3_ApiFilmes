@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Filme {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  ano       Int
+  genero    String
+  direcao   String
+  descricao String
+  reviews   Review[] @relation("FilmeReviews")
+}
+
+model Review {
+  id         Int    @id @default(autoincrement())
+  autor      String
+  comentario String
+  nota       Int
+  filmeId    Int
+  filme      Filme @relation("FilmeReviews", fields: [filmeId], references: [id])
+}
